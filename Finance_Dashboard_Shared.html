@@ -124,7 +124,8 @@
     msg.textContent = ""; btn.disabled = true; btn.textContent = "Decrypting…";
     try {
       const data = await tryUnlock(pwd.value);
-      window.DATA = data;
+      DATA = data;          // update the var-binding declared in the main script
+      window.DATA = data;   // mirror on window for safety
       document.getElementById("lockScreen").remove();
       if (typeof init === "function") init();
     } catch (err) {
@@ -225,7 +226,7 @@
 </div>
 
 <script>
-let DATA = null;  /* populated by decryption */
+var DATA = null;  /* populated by password decryption */
 
 const CURRENCY = { "Personal SA":"ZAR", "Business SA":"ZAR", "KSA":"SAR" };
 const ACCOUNT_LABELS = {
@@ -780,7 +781,7 @@ function init() {
   refreshSavingsBadge();
   selectTab(currentAccount);
 }
-if (window.DATA) init();
+if (DATA) init();
 </script>
 </body>
 </html>
